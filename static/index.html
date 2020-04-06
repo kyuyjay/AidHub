@@ -1,0 +1,76 @@
+<html>
+<head>
+    <title>AidHub - COVID-19 Mutual Aid in SG</title>
+    <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="src/css/index.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="wrapper" class="px-0 vh-100">
+        <nav id="nav" class="navbar navbar-expand-sm justify-content-between">
+            <span class="navbar-brand">AidHub</span>
+            <a class="btn btn-primary" href="contribute.html">Contribute</a>
+        </nav>
+        <div id="landing" class="container-fluid p-0 collapse show init">
+            <div id="landing-body" class="p-0 mx-auto">
+                <!-- <img id="landing-bg" class="mx-auto" src="img/landing.jpg"> -->
+                <h1 id="invitation">COVID-19 Mutual Aid Hub</h1>
+                <div class="container-fluid">
+                    <form id="search-form" class="my-0">
+                        <div class="form-row">
+                            <div class="col-sm-4">
+                                <select id="cats" class="form-control">
+                                    <option value="all">All Categories</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <select id="micro-genres" class="form-control">
+                                    <option value="all">All Types of Aid</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <button id="search" type="button" class="btn btn-primary" data-toggle="collapse" data-target=".init">Start Looking</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="main" class="container-fluid collapse init" data-parent="#wrapper">
+            <div class="row w-100">
+                <div id="filter-bar" class="col-3">
+                    <form id="filter" class="filters p-4 w-100">
+                        <div class="row">
+                            <div class="col">
+                                <h3>Filter by</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col my-2">
+                                <label for="filter-cats">Categories</label>
+                                <select id="filter-cats" class="form-control mr-1 input-lg">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="filter-genres">Type</label>
+                                <select id="filter-genres" class="form-control input-lg">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="testbed" class="col-9">
+                    <!-- Canvas goes here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="lib/jquery-3.4.1.min.js"></script>
+<script src="lib/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="lib/d3/d3.v5.min.js"></script>
+<script src="lib/d3/d3-tip.min.js"></script>
+<script src="src/js/index.js"></script>
+</html>
