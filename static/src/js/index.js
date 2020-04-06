@@ -181,6 +181,7 @@ function draw(f_listings) {
     cardbed.enter()
         .append("div")
         .classed("card",true)
+        .classed("mb-3",true)
         .each(function(d) {
             d3.select(this)
                 .append("h5")
