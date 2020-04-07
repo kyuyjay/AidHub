@@ -114,19 +114,19 @@ h4 {
 
 #invitation {
     position: absolute;
-    top: 40%;
+    top: 15%;
     width: 80%;
 }
 
 #welcome {
     position: absolute;
-    top: 50%;
+    top: 30%;
     width: 80%;
 }
 
 #search-form {
     position: absolute;
-    top: 60%;
+    top: 70%;
     width: 80%;
 }
 
