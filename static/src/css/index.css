@@ -3,7 +3,6 @@ body {
 }
 
 #landing {
-    height: 100%;
 }
 
 #landing-banner {
@@ -13,10 +12,8 @@ body {
 
 #landing-body {
     height: 87%;
-    width: 90%;
-    overflow: hidden;
+    width: 80%;
     border-radius: 20px;
-    position: relative;
 }
 
 #landing-bg {
@@ -117,17 +114,20 @@ h4 {
 
 #invitation {
     position: absolute;
-    top: 44%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 40%;
+    width: 80%;
+}
+
+#welcome {
+    position: absolute;
+    top: 50%;
+    width: 80%;
 }
 
 #search-form {
     position: absolute;
+    top: 60%;
     width: 80%;
-    top: 57%;
-    left: 50%;
-    transform: translate(-50%,-50%);
 }
 
 #search.collapsing {

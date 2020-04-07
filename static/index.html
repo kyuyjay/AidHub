@@ -9,31 +9,44 @@
     <div id="wrapper" class="px-0 vh-100">
         <nav id="nav" class="navbar navbar-dark bg-dark justify-content-between mb-3">
             <a class="navbar-brand" href="/">AidHub</a>
-            <a class="btn btn-primary" href="contribute.html">Contribute</a>
         </nav>
-        <div id="landing" class="container-fluid p-0 collapse show init">
-            <div id="landing-body" class="p-0 mx-auto">
+        <div id="landing" class="p-0 collapse show init">
+            <div id="landing-body" class="mx-auto px-0 container-fluid">
                 <!-- <img id="landing-bg" class="mx-auto" src="img/landing.jpg"> -->
-                <h1 id="invitation">COVID-19 Mutual Aid Hub</h1>
-                <div class="container-fluid">
-                    <form id="search-form" class="my-0">
-                        <div class="form-row">
-                            <div class="col-sm-4">
-                                <select id="cats" class="form-control">
-                                    <option value="all">All Categories</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-6">
-                                <select id="micro-genres" class="form-control">
-                                    <option value="all">All Types of Aid</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-2">
-                                <button id="search" type="button" class="btn btn-primary" data-toggle="collapse" data-target=".init">Start Looking</button>
-                            </div>
-                        </div>
-                    </form>
+                <div id="invitation" class="row mb-5 px-0 mx-0">
+                    <div class="col" align="center">
+                        <h1>COVID-19 Mutual Aid Hub</h1>
+                    </div>
                 </div>
+                <div id="welcome" class="row px-0 mx-0">
+                    <div class="col">
+                        <p>As the COVID-19 situation evolves, so does our community. This hub serves to help connect those who need resources with those who can offer them, by listing initiatives to redistribute items, services, money and opportunities across Singapore. It is publicly open and editable--please update it with any initiatives that you know of.</p>
+                    </div>
+                </div>
+                <form id="search-form" class="mt-5">
+                    <div class="form-row">
+                        <div class="col-sm-5">
+                            <select id="cats" class="form-control">
+                                <option value="all">All Categories</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-5">
+                            <select id="micro-genres" class="form-control">
+                                <option value="all">All Types of Aid</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2" align="right">
+                            <button id="search" type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target=".init">Get Aid</button>
+                        </div>
+                    </div>
+                    <div class="form-row mt-3">
+                        <div class="col"></div>
+                        <div class="col-4" align="center">
+                            <a href="contribute.html" class="btn btn-block btn-primary">Submit an Initiative</a>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                </form>
             </div>
         </div>
         <div id="main" class="container-fluid px-0 collapse init" data-parent="#wrapper">
@@ -60,6 +73,11 @@
                             </div>
                         </div>
                     </form>
+                    <div class="row">
+                        <div class="col">
+                            <a href="contribute.html" class="btn btn-primary btn-block">Submit an Initiative</a>
+                        </div>
+                    </div>
                 </div>
                 <div id="testbed" class="col-9">
                     <!-- Canvas goes here -->

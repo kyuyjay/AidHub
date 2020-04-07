@@ -370,7 +370,15 @@ function filter() {
     var selected_genre = document.getElementById("filter-genres").value;
     if (selected_genre != "all") {
         filtered = filtered.filter(function(d) {
-            return d["type"][selected_genre] == "True";
+            if ("type" in d) {
+                if (selected_genre in d.type) {
+                    return d["type"][selected_genre] == "True";
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
         });
     } 
 
