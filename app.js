@@ -72,6 +72,7 @@ app.use('/contribute', function(req,res,next) {
                 clean[key] = req.sanitize(req.body[key]);
             }
         }
+        clean["type"] = req.body.type;
         console.log(clean);
         collection.insertOne(clean);
         res.sendFile(__dirname + "/static/results.html");
