@@ -60,7 +60,13 @@ var tip = d3.tip()
 
 ////////////////////// Event Handlers /////////////////////////
 
-$('#filter').change(function() {
+$('#filter-cats').change(function() {
+    genre = document.getElementById("filter-genres").value;
+    cat = document.getElementById("filter-cats").value;
+    filter();
+});
+
+$('#filter-genres').change(function() {
     genre = document.getElementById("filter-genres").value;
     cat = document.getElementById("filter-cats").value;
     filter();
