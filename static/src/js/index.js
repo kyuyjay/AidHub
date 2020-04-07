@@ -189,25 +189,49 @@ function draw(f_listings) {
         .classed("card",true)
         .classed("mb-3",true)
         .each(function(d) {
-            d3.select(this)
-                .append("h5")
+            var cardhead = d3.select(this)
+                .append("div")
                 .classed("card-header",true)
+                .classed("d-flex",true)
+                .classed("justify-content-between",true)
+                .classed("align-items-center",true);
+
+            cardhead.append("h5")
+                .classed("m-0",true)
                 .text(d.name);
+
+            cardhead.append("form")
+                .classed("m-0",true)
+                .attr("action","delete")
+                .attr("method","post")
+                    .append("button")
+                    .attr("type","submit")
+                    .attr("name","tbd")
+                    .attr("value",d.name)
+                    .classed("btn",true)
+                    .classed("btn-secondary",true)
+                    .text("Delete");
+
             var cardbody = d3.select(this)
                 .append("div")
                 .classed("card-body",true)
+
             cardbody.append("p")
                 .classed("card-text",true)
                 .text(d.summary);
-            if (!d.link.startsWith("http")) {
-                d.link = "http://" + d.link;
+
+            if (d.link != null) {
+                if (!d.link.startsWith("http")) {
+                    d.link = "http://" + d.link;
+                }
+                cardbody.append("a")
+                    .attr("href",d.link)
+                    .attr("target","_blank")
+                    .classed("btn",true)
+                    .classed("btn-primary",true)
+                    .text("Go to Resource");
             }
-            cardbody.append("a")
-                .attr("href",d.link)
-                .attr("target","_blank")
-                .classed("btn",true)
-                .classed("btn-primary",true)
-                .text("Go to Resource");
+
         });
 /*
     f_listings.forEach(d => d.r = 20);
