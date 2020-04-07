@@ -14,15 +14,15 @@
                 <a href="https://www.linkedin.com/in/qyongjian/"><img src="img/LinkedIn-Logos/LI-In-Bug.png" width="20px" height="20px" style="filter: grayscale(100%);" /></a>
             </div>
         </nav>
-        <div id="landing" class="p-0 collapse show init">
+        <div id="landing" class="p-0 collapse show init align-items-center flex">
             <div id="landing-body" class="mx-auto px-0 container-fluid">
                 <!-- <img id="landing-bg" class="mx-auto" src="img/landing.jpg"> -->
-                <div id="invitation" class="row mb-5 px-0 mx-0">
+                <div class="row mb-2 px-0 mx-0">
                     <div class="col" align="center">
-                        <h1>COVID-19 Mutual Aid Hub</h1>
+                        <img src="img/logo.jpg" width="150" class="img-fluid" />
                     </div>
                 </div>
-                <div id="welcome" class="row px-0 mx-0">
+                <div class="row px-0 mx-0">
                     <div class="col px-0">
                         <p>As the COVID-19 situation evolves, so does our community. This hub serves to help connect those who need resources with those who can offer them, by listing initiatives to redistribute items, services, money and opportunities across Singapore. Below, you can filter out the initiatives by category or type of aid you need or wish to contribute. If you want to add an initiative that you head or know about, please click the 'Submit an initiative' below! </p>
 
@@ -33,12 +33,10 @@
                         </ol>                         
                         <p>We are here for each other, for the long haul.</p>
 
-                        <p>If you have any ideas for improving or distributing this hub, you can email <a href="mailto:rachelooi.sh@gmail.com">Rachel Ooi</a></p>
-
-                        <p>For technical related queries or improvements, you can email <a href="mailto:qyongjian@gmail.com">YJ</a></p>
+                        <p>If you have any ideas for improving or distributing this hub, you can email <a href="mailto:rachelooi.sh@gmail.com">Rachel Ooi</a>. For technical related queries or improvements, you can email <a href="mailto:qyongjian@gmail.com">YJ</a></p>
                     </div>
                 </div>
-                <form id="search-form" class="mt-5">
+                <form>
                     <div class="form-row">
                         <div class="col-sm-5">
                             <select id="cats" class="form-control">
@@ -96,6 +94,22 @@
                 </div>
                 <div id="testbed" class="col-9">
                     <!-- Canvas goes here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delete-popup" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Are you sure you want to delete?</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="deleteEntry()">Yes</button>
                 </div>
             </div>
         </div>

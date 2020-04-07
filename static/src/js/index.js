@@ -4,6 +4,7 @@
 
 //d3.select("#landing-banner").attr("width",document.getElementById("landing-bg").clientWidth);
 
+
 //Global Variables
 var svg;
 var sim;
@@ -13,6 +14,8 @@ var genres = [["all","All Types"],["purItem","Purchase Items"],["donItem","Donat
 var genre;
 var cats = ["All Categories", "Government Measures", "Matching Givers to Receivers", "Local Business", "Students", "Employment", "Migrant Workers", "Low-income Households", "Elderly", "Domestic Violence", "Creative Industry", "Medical Services", "Mental Health", "Join Networks", "Obtaining Essentials", "Stay Home", "Other Countries"]
 var cat;
+
+var tbd;
 
 ////////////////////// Landing Page /////////////////////////
 
@@ -200,17 +203,15 @@ function draw(f_listings) {
                 .classed("m-0",true)
                 .text(d.name);
 
-            cardhead.append("form")
-                .classed("m-0",true)
-                .attr("action","delete")
-                .attr("method","post")
-                    .append("button")
-                    .attr("type","submit")
-                    .attr("name","tbd")
-                    .attr("value",d.name)
-                    .classed("btn",true)
-                    .classed("btn-secondary",true)
-                    .text("Delete");
+            cardhead.append("button")
+                .attr("data-toggle","modal")
+                .attr("data-target","#delete-popup")
+                .attr("onclick",function(d) {
+                    return "setDelete(\"" + d.name + "\")";
+                })
+                .classed("btn",true)
+                .classed("btn-secondary",true)
+                .text("Delete");
 
             var cardbody = d3.select(this)
                 .append("div")
@@ -419,3 +420,11 @@ function filter() {
     draw(filtered);
 }
 
+function setDelete(name) {
+    tbd = name;
+}
+
+function deleteEntry(name) {
+    $.post("delete",{"tbd": tbd});
+    search();
+}

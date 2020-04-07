@@ -2,7 +2,16 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+#wrapper {
+    overflow: hidden;
+}
+
 #landing {
+    height: 90vh;
+}
+
+.flex {
+    display: flex;
 }
 
 #landing-banner {
@@ -11,7 +20,6 @@ body {
 }
 
 #landing-body {
-    height: 87%;
     width: 80%;
     border-radius: 20px;
 }
