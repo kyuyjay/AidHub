@@ -113,10 +113,12 @@ function search() {
             resize(d,sim)
         });
 */
+    d3.select("#wrapper")
+        .style("overflow","visible");
+
     cat = document.getElementById("cats").value;
     genre = document.getElementById("micro-genres").value;
 
-    //Sample dataset for development purposes
     d3.json("data").then(function(dump) {
         console.log(dump)
         listings = dump.listings;
