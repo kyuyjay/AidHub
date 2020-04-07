@@ -380,7 +380,7 @@ function filter() {
     var selected_genre = document.getElementById("filter-genres").value;
     if (selected_genre != "all") {
         filtered = filtered.filter(function(d) {
-            if ("type" in d != null) {
+            if ("type" in d && d.type != null) {
                 if (selected_genre in d.type) {
                     return d["type"][selected_genre] == "True";
                 } else {
