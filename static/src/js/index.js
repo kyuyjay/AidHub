@@ -204,9 +204,10 @@ function draw(f_listings) {
             }
             cardbody.append("a")
                 .attr("href",d.link)
+                .attr("target","_blank")
                 .classed("btn",true)
                 .classed("btn-primary",true)
-                .text("Get Aid");
+                .text("Go to Resource");
         });
 /*
     f_listings.forEach(d => d.r = 20);
@@ -379,7 +380,7 @@ function filter() {
     var selected_genre = document.getElementById("filter-genres").value;
     if (selected_genre != "all") {
         filtered = filtered.filter(function(d) {
-            if ("type" in d) {
+            if ("type" in d != null) {
                 if (selected_genre in d.type) {
                     return d["type"][selected_genre] == "True";
                 } else {
