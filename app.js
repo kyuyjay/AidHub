@@ -87,7 +87,6 @@ app.use('/delete', function(req,res,next) {
         const db = mgd.db("aidhub");
         const collection = db.collection("test");
         collection.deleteOne({"name": req.body.tbd});
-        res.sendFile(__dirname + "/static/results.html");
     }, function(err) {
         res.sendStatus(500);
         console.log("Error " + err)
