@@ -13,7 +13,8 @@
  */
 
 const express = require('express')
-const MongoClient = require('mongodb').MongoClient
+const mongo = require('mongodb');
+const MongoClient = require('mongodb').MongoClient;
 const expressSanitizer = require('express-sanitizer');
 const app = express()
 
@@ -86,7 +87,8 @@ app.use('/delete', function(req,res,next) {
     mgd.connect(function() {
         const db = mgd.db("aidhub");
         const collection = db.collection("test");
-        collection.deleteOne({"name": req.body.tbd});
+        collection.deleteOne({"_id": new mongo.ObjectId(req.body.tbd)});
+        res.sendStatus(200);
     }, function(err) {
         res.sendStatus(500);
         console.log("Error " + err)

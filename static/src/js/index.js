@@ -120,7 +120,6 @@ function search() {
     genre = document.getElementById("micro-genres").value;
 
     d3.json("data").then(function(dump) {
-        console.log(dump)
         listings = dump.listings;
         nav(listings);
         filter();
@@ -209,7 +208,7 @@ function draw(f_listings) {
                 .attr("data-toggle","modal")
                 .attr("data-target","#delete-popup")
                 .attr("onclick",function(d) {
-                    return "setDelete(\"" + d.name + "\")";
+                    return "setDelete(\"" + d._id + "\")";
                 })
                 .classed("btn",true)
                 .classed("btn-secondary",true)
