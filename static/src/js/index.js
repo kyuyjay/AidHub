@@ -193,6 +193,9 @@ function draw(f_listings) {
             cardbody.append("p")
                 .classed("card-text",true)
                 .text(d.summary);
+            if (!d.link.startsWith("http")) {
+                d.link = "http://" + d.link;
+            }
             cardbody.append("a")
                 .attr("href",d.link)
                 .classed("btn",true)
