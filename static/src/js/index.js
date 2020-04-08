@@ -12,7 +12,25 @@ var sim;
 var listings = [];
 var genres = [["all","All Types"],["purItem","Purchase Items"],["donItem","Donate Items"],["donFunds","Donate Funds"],["info","Information"],["network","Network"],["perSer","Provide Personal Service"],["volun","Volunteer with Organization"]];
 var genre;
-var cats = ["All Categories", "Government Measures", "Matching Givers to Receivers", "Local Business", "Students", "Employment", "Migrant Workers", "Low-income Households", "Elderly", "Domestic Violence", "Creative Industry", "Medical Services", "Mental Health", "Join Networks", "Obtaining Essentials", "Stay Home", "Other Countries"]
+var cats = ["All Categories", 
+    "Government Measures", 
+    "Matching Givers to Receivers", 
+    "Local Business", 
+    "Students", 
+    "Employment", 
+    "Migrant Workers", 
+    "Low-income Households", 
+    "Persons with Disabilities", 
+    "Elderly", 
+    "Domestic Violence", 
+    "Creative Industry", 
+    "Medical Services", 
+    "Mental Health", 
+    "Join Networks", 
+    "Obtaining Essentials", 
+    "Stay Home", 
+    "Other Countries"];
+
 var cat;
 
 var tbd;
