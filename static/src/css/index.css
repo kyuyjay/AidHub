@@ -13,7 +13,7 @@ body {
 }
 
 .flex {
-    display: flex;
+    display: block;
 }
 
 #landing-banner {
@@ -22,9 +22,10 @@ body {
 }
 
 #landing-body {
+    position: relative;
+    top: 50;
     width: 80%;
     border-radius: 20px;
-    height: 100%;
 }
 
 #landing-bg {
