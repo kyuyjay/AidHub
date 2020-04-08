@@ -7,7 +7,9 @@ body {
 }
 
 #landing {
+    min-height: 90%;
     height: 90vh;
+    overflow: auto;
 }
 
 .flex {
@@ -22,6 +24,7 @@ body {
 #landing-body {
     width: 80%;
     border-radius: 20px;
+    height: 100%;
 }
 
 #landing-bg {
