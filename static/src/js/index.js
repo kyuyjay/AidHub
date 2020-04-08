@@ -134,7 +134,7 @@ function search() {
     d3.select("#wrapper")
         .style("overflow","visible");
 
-    d3.select("#contribute")
+    d3.select("#contribute-nav-btn")
         .style("display","inline");
 
     cat = document.getElementById("cats").value;
