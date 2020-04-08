@@ -88,6 +88,12 @@ h4 {
     font-size: 1.5rem;
 }
 
+.badge-primary {
+    font-weight: 500;
+    color: #FFFFFF;
+    background-color: #F59595;
+}
+
 .btn-primary {
     color: #FFFFFF;
     background-color: #F94D4D;

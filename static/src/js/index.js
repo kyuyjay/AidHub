@@ -223,7 +223,11 @@ function draw(f_listings) {
 
             cardhead.append("h5")
                 .classed("m-0",true)
-                .text(d.name);
+                .text(d.name + " ")
+                .append("span")
+                    .classed("badge",true)
+                    .classed("badge-primary",true)
+                    .text(d.cat);
 
             cardhead.append("button")
                 .attr("data-toggle","modal")
