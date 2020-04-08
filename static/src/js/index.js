@@ -134,6 +134,9 @@ function search() {
     d3.select("#wrapper")
         .style("overflow","visible");
 
+    d3.select("#contribute")
+        .style("display","inline");
+
     cat = document.getElementById("cats").value;
     genre = document.getElementById("micro-genres").value;
 
