@@ -12,21 +12,35 @@
  * mongoDB for backend communicaiton
  */
 
+re('fs');
+var http = require('http');
+var https = require('https');
+var privateKey  = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/privkey.pem', 'utf8');
+var certificate = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/fullchain.pem', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
 const express = require('express')
+
 const mongo = require('mongodb');
 const MongoClient = require('mongodb').MongoClient;
 const expressSanitizer = require('express-sanitizer');
-const app = express()
+const app = express();
 
-//Set localhost port to 8000
-const port = 8000
+//Set port to 80 for http
+const port = 80;
+
+//Set port to 443 for https
+const port_s = 443;
 
 //Set mongoDB port to 27017
 const mgd = new MongoClient('mongodb://localhost:27017')
 
 var data;
 
-app.listen(port)
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(port);
+httpsServer.listen(port_s);
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
