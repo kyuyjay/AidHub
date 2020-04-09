@@ -131,6 +131,12 @@ function search() {
             resize(d,sim)
         });
 */
+    var visited = "true";
+    if (document.cookie == "") {
+        visted = "false";
+        document.cookie = "aid=hub; expires=Fri, 9 Apr 2021 12:00:00 UTC"
+    }
+
     d3.select("#wrapper")
         .style("overflow","visible");
 
@@ -140,7 +146,7 @@ function search() {
     cat = document.getElementById("cats").value;
     genre = document.getElementById("micro-genres").value;
 
-    d3.json("data").then(function(dump) {
+    d3.json("data/" + visited).then(function(dump) {
         listings = dump.listings;
         nav(listings);
         filter();

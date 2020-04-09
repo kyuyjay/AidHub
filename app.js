@@ -15,10 +15,10 @@
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
-var privateKey  = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/privkey.pem', 'utf8');
-var certificate = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/cert.pem', 'utf8');
-var ca = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/chain.pem', 'utf8');
-var credentials = {key: privateKey, cert: certificate};
+//var privateKey  = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/privkey.pem', 'utf8');
+//var certificate = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/cert.pem', 'utf8');
+//var ca = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/chain.pem', 'utf8');
+//var credentials = {key: privateKey, cert: certificate};
 const express = require('express')
 
 const mongo = require('mongodb');
@@ -55,10 +55,13 @@ app.use('/', express.static('static'));
 //Dynamic GET function 
 //:zip to specify zip code to pull nearby listings
 
-app.use('/data', function(req,res,next) {
+app.use('/data/:visited', function(req,res,next) {
     mgd.connect(function() {
         console.log("Connected to local db");
         const db = mgd.db("aidhub");
+        if (req.params.visited == "false") {
+            db.collection('track').insertOne({ip: req.ip, date: new Date()})
+        }
         cursor = db.collection('test').find(); 
         var data = cursor.toArray();
         data.then(function(data) {
@@ -106,7 +109,7 @@ app.use('/delete', function(req,res,next) {
 });
 
 var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
+//var httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(port);
-httpsServer.listen(port_s);
+//httpsServer.listen(port_s);
