@@ -12,11 +12,12 @@
  * mongoDB for backend communicaiton
  */
 
-re('fs');
+var fs = require('fs');
 var http = require('http');
 var https = require('https');
 var privateKey  = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/privkey.pem', 'utf8');
-var certificate = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/fullchain.pem', 'utf8');
+var certificate = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/cert.pem', 'utf8');
+var ca = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/chain.pem', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 const express = require('express')
 
@@ -36,11 +37,6 @@ const mgd = new MongoClient('mongodb://localhost:27017')
 
 var data;
 
-var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
-
-httpServer.listen(port);
-httpsServer.listen(port_s);
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -108,3 +104,9 @@ app.use('/delete', function(req,res,next) {
         console.log("Error " + err)
     });
 });
+
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(port);
+httpsServer.listen(port_s);
