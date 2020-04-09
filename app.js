@@ -15,10 +15,10 @@
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
-//var privateKey  = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/privkey.pem', 'utf8');
-//var certificate = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/cert.pem', 'utf8');
-//var ca = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/chain.pem', 'utf8');
-//var credentials = {key: privateKey, cert: certificate};
+var privateKey  = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/privkey.pem', 'utf8');
+var certificate = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/cert.pem', 'utf8');
+var ca = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/chain.pem', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
 const express = require('express')
 
 const mongo = require('mongodb');
@@ -92,7 +92,7 @@ app.use('/contribute', function(req,res,next) {
         res.sendFile(__dirname + "/static/results.html");
     }, function(err) {
         res.sendStatus(500);
-        console.log("Error " + err)
+        console.log("Error " + err);
     });
 });
 
@@ -104,12 +104,24 @@ app.use('/delete', function(req,res,next) {
         res.sendStatus(200);
     }, function(err) {
         res.sendStatus(500);
-        console.log("Error " + err)
+        console.log("Error " + err);
+    });
+});
+
+app.use('/count', function(req,res,next) {
+    mgd.connect(function() {
+        const db = mgd.db("aidhub");
+        db.collection("track").countDocuments(function(err,count) {
+            res.send("<html>" + count+ "</html>");
+        });
+    }, function(err) {
+        res.sendStatus(500);
+        console.log("Error " + err);
     });
 });
 
 var httpServer = http.createServer(app);
-//var httpsServer = https.createServer(credentials, app);
+var httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(port);
-//httpsServer.listen(port_s);
+httpsServer.listen(port_s);

@@ -133,7 +133,7 @@ function search() {
 */
     var visited = "true";
     if (document.cookie == "") {
-        visted = "false";
+        visited = "false";
         document.cookie = "aid=hub; expires=Fri, 9 Apr 2021 12:00:00 UTC"
     }
 
