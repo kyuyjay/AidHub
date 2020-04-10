@@ -7,12 +7,16 @@ var svg = d3.select("#wrapper")
     .attr("height", height + 100)
 
 d3.json("count").then(function(stats) {
+    d3.select("#total")
+        .text(stats.length)
+
     var collate = d3.map();
     stats.forEach(function(d) {
         d.date = new Date(d.date);
-        binned = new Date();
-        binned.setDate(d.date.getDate());
-        binned.setHours(d.date.getHours());
+        binned = d.date;
+        binned.setMinutes(0);
+        binned.setSeconds(0);
+        binned.setMilliseconds(0);
         if (collate.has(binned)) {
             collate.set(binned, collate.get(binned) + 1);
         } else {
@@ -24,11 +28,11 @@ d3.json("count").then(function(stats) {
     collate.keys().forEach(function(d) {
         data.push({"x": d, "y": collate.get(d)});
     });
+    console.log(data)
 
     var x_domain = d3.extent(data, function(d) {
         return d.x;
     });
-    console.log(x_domain)
 
     var y_domain = d3.extent(data, function(d) {
         return d.y;
@@ -44,11 +48,9 @@ d3.json("count").then(function(stats) {
 
     var line = d3.line()
         .x(function(d) {
-            console.log(x(new Date(d.x)))
             return x(new Date(d.x));
         })
         .y(function(d) {
-            console.log(y(d.y))
             return y(d.y);
         });
 
