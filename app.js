@@ -111,8 +111,12 @@ app.use('/delete', function(req,res,next) {
 app.use('/count', function(req,res,next) {
     mgd.connect(function() {
         const db = mgd.db("aidhub");
-        db.collection("track").countDocuments(function(err,count) {
-            res.send("<html>" + count+ "</html>");
+        cursor = db.collection("track").find()
+        var data = cursor.toArray();
+        data.then(function(data) {
+            res.json(data);
+        }, function(err) {
+            console.log("Error " + err)
         });
     }, function(err) {
         res.sendStatus(500);

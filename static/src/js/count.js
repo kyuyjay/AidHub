@@ -1,0 +1,70 @@
+var width = 800;
+var height = 600;
+    
+var svg = d3.select("#wrapper")
+    .append("svg")
+    .attr("width", width + 100)
+    .attr("height", height + 100)
+
+d3.json("count").then(function(stats) {
+    var collate = d3.map();
+    stats.forEach(function(d) {
+        d.date = new Date(d.date);
+        binned = new Date();
+        binned.setDate(d.date.getDate());
+        binned.setHours(d.date.getHours());
+        if (collate.has(binned)) {
+            collate.set(binned, collate.get(binned) + 1);
+        } else {
+            collate.set(binned, 1);
+        }
+    });
+
+    var data = [];
+    collate.keys().forEach(function(d) {
+        data.push({"x": d, "y": collate.get(d)});
+    });
+
+    var x_domain = d3.extent(data, function(d) {
+        return d.x;
+    });
+    console.log(x_domain)
+
+    var y_domain = d3.extent(data, function(d) {
+        return d.y;
+    });
+    
+    var x = d3.scaleTime()
+        .domain([new Date(x_domain[1]),new Date(x_domain[0])])
+        .range([50, width + 50]);
+    
+    var y = d3.scaleLinear()
+        .domain(y_domain)
+        .range([height + 50, 50]);
+
+    var line = d3.line()
+        .x(function(d) {
+            console.log(x(new Date(d.x)))
+            return x(new Date(d.x));
+        })
+        .y(function(d) {
+            console.log(y(d.y))
+            return y(d.y);
+        });
+
+    svg.append("g")
+        .attr("transform", "translate(0, " + (height + 50) + ")")
+        .call(d3.axisBottom(x));
+
+    svg.append("g")
+        .attr("transform", "translate(50,0)")
+        .call(d3.axisLeft(y));
+
+    svg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 1.5)
+        .attr("d", line);
+
+});
