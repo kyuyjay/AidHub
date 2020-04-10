@@ -28,18 +28,17 @@ d3.json("count").then(function(stats) {
     collate.keys().forEach(function(d) {
         data.push({"x": d, "y": collate.get(d)});
     });
-    console.log(data)
 
     var x_domain = d3.extent(data, function(d) {
-        return d.x;
+        return new Date(d.x);
     });
 
     var y_domain = d3.extent(data, function(d) {
         return d.y;
     });
-    
+   
     var x = d3.scaleTime()
-        .domain([new Date(x_domain[1]),new Date(x_domain[0])])
+	.domain(x_domain)
         .range([50, width + 50]);
     
     var y = d3.scaleLinear()
