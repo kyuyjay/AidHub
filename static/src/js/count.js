@@ -30,21 +30,24 @@ d3.json("count/outs").then(function(stats) {
 
 d3.json("count/hits").then(function(stats) {
     d3.select("#total")
-        .text(stats.length)
+        .text("Total views " + stats.length);
+
+    stats.filter(d => d.unique);
+
+    d3.select("#total-u")
+        .text("Total unique view " + stats.length);
 
     var collate = d3.map();
     stats.forEach(function(d) {
-        if (d.unique) {
-            d.date = new Date(d.date);
-            binned = d.date;
-            binned.setMinutes(0);
-            binned.setSeconds(0);
-            binned.setMilliseconds(0);
-            if (collate.has(binned)) {
-                collate.set(binned, collate.get(binned) + 1);
-            } else {
-                collate.set(binned, 1);
-            }
+        d.date = new Date(d.date);
+        binned = d.date;
+        binned.setMinutes(0);
+        binned.setSeconds(0);
+        binned.setMilliseconds(0);
+        if (collate.has(binned)) {
+            collate.set(binned, collate.get(binned) + 1);
+        } else {
+            collate.set(binned, 1);
         }
     });
 
