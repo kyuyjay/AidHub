@@ -32,7 +32,6 @@ d3.json("count/hits").then(function(stats) {
     d3.select("#total")
         .text(stats.length)
 
-    console.log(stats)
     var collate = d3.map();
     stats.forEach(function(d) {
         if (d.unique) {
