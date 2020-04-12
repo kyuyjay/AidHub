@@ -14,12 +14,11 @@
 
 var fs = require('fs');
 var http = require('http');
-var https = require('https');/*
+var https = require('https');
 var privateKey  = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/privkey.pem', 'utf8');
 var certificate = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/cert.pem', 'utf8');
 var ca = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/chain.pem', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
-*/
 const express = require('express')
 
 const mongo = require('mongodb');
@@ -195,7 +194,7 @@ app.use('/count/outs', function(req,res,next) {
 });
 
 var httpServer = http.createServer(app);
-//var httpsServer = https.createServer(credentials, app);
+var httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(port);
-//httpsServer.listen(port_s);
+httpsServer.listen(port_s);
