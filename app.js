@@ -14,11 +14,12 @@
 
 var fs = require('fs');
 var http = require('http');
-var https = require('https');
+var https = require('https');/*
 var privateKey  = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/privkey.pem', 'utf8');
 var certificate = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/cert.pem', 'utf8');
 var ca = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/chain.pem', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
+*/
 const express = require('express')
 
 const mongo = require('mongodb');
@@ -36,7 +37,6 @@ const port_s = 443;
 const mgd = new MongoClient('mongodb://localhost:27017')
 
 var data;
-
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -59,11 +59,9 @@ app.use('/data/:visited', function(req,res,next) {
     mgd.connect(function() {
         console.log("Connected to local db");
         const db = mgd.db("aidhub");
-        if (req.params.visited == "false") {
-            db.collection('track').insertOne({ip: req.ip, date: new Date()})
-        }
+        db.collection('track').insertOne({ip: req.ip, date: new Date(), unique: req.params.visited})
         cursor = db.collection('test').find(); 
-        var data = cursor.toArray();
+        data = cursor.toArray();
         data.then(function(data) {
             payload = {"listings": data};
             res.json(payload);
@@ -108,13 +106,85 @@ app.use('/delete', function(req,res,next) {
     });
 });
 
-app.use('/count', function(req,res,next) {
+app.use('/cat/:name', function(req,res,next) {
+    mgd.connect(function() {
+        const db = mgd.db("aidhub");
+        const collection = db.collection("track_cat");
+        collection.insertOne({date: new Date(), "name": req.params.name})
+    }, function(err) {
+        res.sendStatus(500);
+        console.log("Error " + err);
+    });
+});
+
+app.use('/out/:id/:name', function(req,res,next) {
+    mgd.connect(function() {
+        const db = mgd.db("aidhub");
+        const collection = db.collection("track_out");
+        collection.insertOne({date: new Date(), resource: req.params.id, name: req.params.name});
+        cursor = db.collection("test").find({"_id": new mongo.ObjectId(req.params.id)})
+        data = cursor.toArray();
+        data.then(function(data) {
+            var url = data[0].link;
+            if (!url.startsWith("http")) {
+                url = "http://" + url;
+            }
+            res.redirect(url);
+        }, function(err) {
+            res.sendStatus(500);
+            console.log("Error " + err);
+        });
+    }, function(err) {
+        console.log("Error " + err);
+    });
+});
+
+app.use('/count/hits', function(req,res,next) {
     mgd.connect(function() {
         const db = mgd.db("aidhub");
         cursor = db.collection("track").find()
-        var data = cursor.toArray();
-        data.then(function(data) {
-            res.json(data);
+        var stats = cursor.toArray();
+        stats.then(function(stats) {
+            res.json(stats);
+        }, function(err) {
+            console.log("Error " + err)
+        });
+    }, function(err) {
+        res.sendStatus(500);
+        console.log("Error " + err);
+    });
+});
+
+app.use('/count/cats', function(req,res,next) {
+    mgd.connect(function() {
+        const db = mgd.db("aidhub");
+        cursor = db.collection("track_cat").aggregate([
+            {$group: {_id: "$name", count: {"$sum": 1}}},
+            {$sort: {count: -1}}
+        ])
+        var stats = cursor.toArray();
+        stats.then(function(stats) {
+            res.json(stats);
+        }, function(err) {
+            console.log("Error " + err)
+        });
+    }, function(err) {
+        res.sendStatus(500);
+        console.log("Error " + err);
+    });
+});
+
+app.use('/count/outs', function(req,res,next) {
+    mgd.connect(function() {
+        const db = mgd.db("aidhub");
+        cursor = db.collection("track_out").aggregate([
+            {$group: {_id: "$name", count: {"$sum": 1}}},
+            {$sort: {count: -1}},
+            {$limit: 10}
+        ])
+        var stats = cursor.toArray();
+        stats.then(function(stats) {
+            res.json(stats);
         }, function(err) {
             console.log("Error " + err)
         });
@@ -125,7 +195,7 @@ app.use('/count', function(req,res,next) {
 });
 
 var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
+//var httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(port);
-httpsServer.listen(port_s);
+//httpsServer.listen(port_s);

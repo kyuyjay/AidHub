@@ -1,26 +1,51 @@
 var width = 800;
 var height = 600;
     
-var svg = d3.select("#wrapper")
+var svg = d3.select("#hits")
     .append("svg")
     .attr("width", width + 100)
     .attr("height", height + 100)
 
-d3.json("count").then(function(stats) {
+d3.json("count/cats").then(function(stats) {
+    d3.select("#catlist")
+        .selectAll("li")
+        .data(stats)
+        .enter()
+        .append("li")
+        .text(function(d) {
+            return d._id + ": " + d.count;
+        });
+});
+
+d3.json("count/outs").then(function(stats) {
+    d3.select("#outlist")
+        .selectAll("li")
+        .data(stats)
+        .enter()
+        .append("li")
+        .text(function(d) {
+            return d._id + ": " + d.count;
+        });
+});
+
+d3.json("count/hits").then(function(stats) {
     d3.select("#total")
         .text(stats.length)
 
+    console.log(stats)
     var collate = d3.map();
     stats.forEach(function(d) {
-        d.date = new Date(d.date);
-        binned = d.date;
-        binned.setMinutes(0);
-        binned.setSeconds(0);
-        binned.setMilliseconds(0);
-        if (collate.has(binned)) {
-            collate.set(binned, collate.get(binned) + 1);
-        } else {
-            collate.set(binned, 1);
+        if (d.unique) {
+            d.date = new Date(d.date);
+            binned = d.date;
+            binned.setMinutes(0);
+            binned.setSeconds(0);
+            binned.setMilliseconds(0);
+            if (collate.has(binned)) {
+                collate.set(binned, collate.get(binned) + 1);
+            } else {
+                collate.set(binned, 1);
+            }
         }
     });
 
