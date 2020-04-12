@@ -32,7 +32,9 @@ d3.json("count/hits").then(function(stats) {
     d3.select("#total")
         .text("Total views " + stats.length);
 
-    stats = stats.filter(d => d.unique);
+    stats = stats.filter(function(d) {
+    	return d.unique == "true";
+    });
 
     d3.select("#total-u")
         .text("Total unique view " + stats.length);

@@ -131,9 +131,9 @@ function search() {
             resize(d,sim)
         });
 */
-    var unique = "false";
+    var unique = false;
     if (document.cookie == "") {
-        unique = "true";
+        unique = true;
         document.cookie = "aid=hub; expires=Fri, 9 Apr 2021 12:00:00 UTC"
     }
 
