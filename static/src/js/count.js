@@ -1,10 +1,6 @@
 var width = 800;
 var height = 600;
     
-var svg = d3.select("#hits")
-    .append("svg")
-    .attr("width", width + 100)
-    .attr("height", height + 100)
 
 d3.json("count/cats").then(function(stats) {
     d3.select("#catlist")
@@ -32,12 +28,24 @@ d3.json("count/hits").then(function(stats) {
     d3.select("#total")
         .text("Total views " + stats.length);
 
+    draw(stats, "#hits");
+
     stats = stats.filter(function(d) {
     	return d.unique == "true";
     });
 
     d3.select("#total-u")
         .text("Total unique view " + stats.length);
+    
+    draw(stats, "#hits-u");
+});
+
+function draw(stats, div) {
+
+    var svg = d3.select(div)
+        .append("svg")
+        .attr("width", width + 100)
+        .attr("height", height + 100)
 
     var collate = d3.map();
     stats.forEach(function(d) {
@@ -96,5 +104,4 @@ d3.json("count/hits").then(function(stats) {
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
         .attr("d", line);
-
-});
+}
