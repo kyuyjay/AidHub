@@ -291,8 +291,8 @@ function filter() {
 
     var selected_cat = document.getElementById("filter-cats").value;
     if (selected_cat != "All Categories") {
+        $.post("cat/" + selected_cat);
         filtered = filtered.filter(function(d) {
-            $.post("cat/" + selected_cat);
             return d.cat == selected_cat;
         });
     } 
