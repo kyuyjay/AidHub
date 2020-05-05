@@ -23,10 +23,10 @@ const MongoClient = require('mongodb').MongoClient;
 const app = express();
 
 //Set port to 80 for http
-const port = 8080;
+const port = 80;
 
 //Set port to 443 for https
-const port_s = 8443;
+const port_s = 443;
 
 //Set mongoDB port to 27017
 //Set db to aidhub
