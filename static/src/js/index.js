@@ -108,29 +108,29 @@ $(document).on("submit", "#search-form", function(e) {
     }
 });
 
+function out(id, name) {
+    $.post("/count/outs",{"id": id, "name": name});
+    return true;
+}
+
+function setDelete(name) {
+    tbd = name;
+}
+
+function deleteEntry() {
+    $.ajax({
+        type: "DELETE",
+        url: "data/" + tbd,
+    });
+    search();
+}
+
 ///////////////////////////////////////////////////////////////
 
 ////////////////////// Functions /////////////////////////
 
 //Search function triggers on click from landing page
 function search() {
-    /*
-    var title_height = document.getElementById("controls").clientHeight;
-    var height = window.innerHeight - title_height;
-    var width = document.getElementById("testbed").clientWidth;
-    //Main Canvas
-    svg = d3.select("#testbed")
-        .append("svg")
-        .attr("id","canvas")
-        .attr("width",width)
-        .attr("height",height)
-        .call(function(d) {
-            tip(d,width,height);
-        })
-        .call(function(d) {
-            resize(d,sim)
-        });
-*/
     var unique = false;
     if (document.cookie == "") {
         unique = true;
@@ -253,8 +253,9 @@ function draw(f_listings) {
                     d.link = "http://" + d.link;
                 }
                 cardbody.append("a")
-                    .attr("href","/out/" + d._id + "/" + d.name)
+                    .attr("href",d.link)
                     .attr("target","_blank")
+                    .attr("onclick","out(\"" +d._id + "\",\"" + d.name + "\")")
                     .classed("btn",true)
                     .classed("btn-primary",true)
                     .text("Go to Resource");
@@ -291,9 +292,13 @@ function filter() {
 
     var selected_cat = document.getElementById("filter-cats").value;
     if (selected_cat != "All Categories") {
-        $.post("cat/" + selected_cat);
+        $.post("count/cats/", {"name": selected_cat});
         filtered = filtered.filter(function(d) {
-            return d.cat == selected_cat;
+            if (Array.isArray(d.cat)) {
+                return d.cat.includes(selected_cat);
+            } else {
+                return d.cat == selected_cat;
+            }
         });
     } 
     
@@ -311,15 +316,6 @@ function filter() {
             }
         });
     } 
-
     draw(filtered);
 }
 
-function setDelete(name) {
-    tbd = name;
-}
-
-function deleteEntry(name) {
-    $.post("delete",{"tbd": tbd});
-    search();
-}
