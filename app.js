@@ -78,7 +78,7 @@ function errorHandler(err, res) {
 function start() {
     console.log("Starting App");
     connectDB().then(db => {
-        route(route_dir(app, db, errorHandler));
+        route(route_dir(db, errorHandler));
         // Start server
         var httpServer = http.createServer(app);
         httpServer.listen(port);

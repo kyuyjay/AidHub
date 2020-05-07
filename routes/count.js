@@ -1,6 +1,6 @@
 const express = require('express');
 
-module.exports = function(app, db, errorHandler) {
+module.exports = function(db, errorHandler) {
     
     var count = express.Router()
 
@@ -29,7 +29,7 @@ module.exports = function(app, db, errorHandler) {
         db.collection('track')
             .find()
             .toArray()
-            .then(res.json)
+            .then(stats => res.json(stats))
             .catch(err => errorHandler(err, res));
     });
 
@@ -51,7 +51,7 @@ module.exports = function(app, db, errorHandler) {
                 }
             ])
             .toArray()
-            .then(res.json)
+            .then(stats => res.json(stats))
             .catch(err => errorHandler(err, res));
     });
 
@@ -76,7 +76,7 @@ module.exports = function(app, db, errorHandler) {
                 }
             ])
             .toArray()
-            .then(res.json)
+            .then(stats => res.json(stats))
             .catch(err => errorHandler(err, res));
     });
 

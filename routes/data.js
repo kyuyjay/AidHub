@@ -1,7 +1,7 @@
 const express = require('express')
 const mongo = require('mongodb'); 
 
-module.exports = function(app, db, errorHandler) {
+module.exports = function(db, errorHandler) {
 
     var data = express.Router()
 
