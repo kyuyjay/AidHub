@@ -24,8 +24,8 @@ const app = express();
 const route_dir = require('./routes')
 
 // Set test ports
-const port = 8080;
-const port_s = 8443;
+var port = 8080;
+var port_s = 8443;
 
 // Get app environment
 var argv = require('minimist')(process.argv.slice(2), {
@@ -38,10 +38,10 @@ var argv = require('minimist')(process.argv.slice(2), {
 if (argv.env == 'prod') {
     
     // Set production port to 80 for http
-    const port = 80;
+    port = 80;
 
     // Set production port to 443 for https
-    const port_s = 443;
+    port_s = 443;
 
     // HTTPS credentials
     var privateKey  = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/privkey.pem', 'utf8');
