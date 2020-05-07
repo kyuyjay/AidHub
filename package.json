@@ -4,8 +4,8 @@
   "description": "Connecting volunteers with resources during the COVID-19 Pandemic",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "echo 'requires admin privileges' && sudo node app.js",
+    "test": "node app.js --env test"
   },
   "repository": {
     "type": "git",
@@ -16,11 +16,10 @@
   "bugs": {
     "url": "https://github.com/kyuyjay/aidhub/issues"
   },
-  "homepage": "https://github.com/kyuyjay/aidhub#readme",
+  "homepage": "https://aidhubsg.com",
   "dependencies": {
     "express": "^4.17.1",
-    "express-sanitizer": "^1.0.5",
-    "express-validator": "^6.4.0",
+    "minimist": "^1.2.5",
     "mongodb": "^3.3.4"
   }
 }

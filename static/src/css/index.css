@@ -6,14 +6,12 @@ body {
     overflow: hidden;
 }
 
-#landing {
-    min-height: 90%;
-    height: 90vh;
-    overflow: auto;
+.flex {
+    display: flex;
 }
 
-.flex {
-    display: block;
+#nav {
+    height: 55px;
 }
 
 #landing-banner {
@@ -22,16 +20,16 @@ body {
 }
 
 #landing-body {
-    position: relative;
-    top: 15%;
     width: 80%;
-    border-radius: 20px;
+}
+
+#landing {
+    height: calc(100vh - 55px);
+    overflow: auto;
 }
 
 #landing-bg {
-    min-width: 100%;
-    min-height: 100%;
-    max-height: 900px;
+    height: calc(100vh - 55px);
 }
 
 #main.show {
@@ -42,10 +40,77 @@ body {
     transition: all 0.3s;
 }
 
-/*
+#filter-nav {
+    display: none;
+}
+
 #filter-bar {
     height: 100%;
     margin-left: 0px;
+}
+
+#filter-bar-sm {
+    display: none;
+}
+
+#contribute-nav-btn {
+    display: none;
+}
+
+#contribute-nav-btn.show {
+    display: inline-block;
+}
+
+#contribute-nav-sm {
+    display: none;
+}
+
+#contact {
+    display: inline-block;
+}
+
+#contact.collapsing {
+    transition: none;
+}
+
+@media (max-width: 650px) {
+    #filter-bar {
+        display: none;
+    }
+
+    #filter-bar-sm.show {
+        display: inline-block;
+    }
+
+    #filter-nav.show {
+        display: inline-block;
+    }
+
+    #nav-sm {
+        z-index: 500;
+    }
+
+    #contact.show {
+        display: block;
+    }
+
+    #contact {
+        display: none;
+    }
+
+    #contribute-nav-btn.show {
+        display: none;
+    }
+
+    #contribute-nav-sm.show {
+        display: inline-block;
+    }
+}
+
+@media (max-width: 345px) {
+    #contribute-nav-sm.show {
+        display: none;
+    }
 }
 
 #filter-bar.show {
@@ -53,6 +118,7 @@ body {
     transition: all 0.3s;
 }
 */
+
 #filter-bar.collapsing {
     transition: all 0.3s;
 }
@@ -128,10 +194,6 @@ h4 {
 
 .custom-range::-ms-thumb {
     background: #9ABAB3;
-}
-
-#contribute-nav-btn {
-    display: none;
 }
 
 #invitation {

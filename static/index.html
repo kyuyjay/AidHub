@@ -5,9 +5,7 @@
     <meta property="og:image" content="http://aidhubsg.com/img/logo_fb.jpeg" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://aidhubsg.com" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="/site.webmanifest">
     <title>AidHub - COVID-19 Mutual Aid in SG</title>
     <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
@@ -16,18 +14,24 @@
 </head>
 <body>
     <div id="wrapper" class="px-0 vh-100">
-        <nav id="nav" class="navbar navbar-dark bg-dark justify-content-between mb-3">
-            <div class="align-items-center d-flex">
+        <nav id="nav" class="navbar navbar-expand-md navbar-dark bg-dark justify-content-between">
+            <div class="d-flex align-middle">
                 <a class="navbar-brand" href="/">AidHub</a>
-                <a id="contribute-nav-btn" href="contribute.html" class="btn btn-primary">Submit an Initiative</a>
+                <a id="contribute-nav-btn" href="contribute.html" class="btn btn-primary init" type="button">Submit an Initiative</a>
             </div>
-            <div id="contact">
+            <div>
+                <a id="filter-nav" href="#" class="init btn btn-primary collapse filter-toggle" type="button" data-toggle="collapse" data-target=".filter-toggle">Filter</a>
+                <a id="contribute-nav-sm" href="contribute.html" class="btn btn-primary init" type="button">Submit an Initiative</a>
+            </div>
+            <div id="contact" class="init show">
                 <a href="https://github.com/kyuyjay/AidHub"><img src="img/GitHub-Mark/GitHub-Mark-Light-32px.png" width="20px" height="20px" class="mr-1"/></a>
                 <!-- <a href="https://www.linkedin.com/in/qyongjian/"><img src="img/LinkedIn-Logos/LI-In-Bug.png" width="20px" height="20px" style="filter: grayscale(100%);" /></a> -->
+                <a href="https://instagram.com/aidhubsg/"><img height="20px" src="img/instagram.png" /></a>
+                <a href="https://t.me/aidhubsg"><img height="20px" src="img/512px-Telegram_logo.png" /></a>
             </div>
         </nav>
-        <div id="landing" class="p-0 collapse show init align-items-center flex">
-            <div id="landing-body" class="mx-auto px-0 container-fluid">
+        <div id="landing" class="p-0 collapse show init flex">
+            <div id="landing-body" class="m-auto px-0 container">
                 <!-- <img id="landing-bg" class="mx-auto" src="img/landing.jpg"> -->
                 <div class="row mb-2 px-0 mx-0">
                     <div class="col" align="center">
@@ -45,28 +49,34 @@
                         </ol>                         
                         <p>We are here for each other, for the long haul.</p>
 
-                        <p>If you have any ideas for improving or distributing this hub, you can email <a href="mailto:rachelooi.sh@gmail.com">Rachel Ooi</a>. For technical related queries or improvements, you can email <a href="mailto:qyongjian@gmail.com">Yong Jian</a>.</p>
+                        <p>If you have any ideas for improving or distributing this hub, you can email <a href="mailto:rachelooi.sh@gmail.com">Rachel Ooi</a>. For technical related queries or improvements, you can email <a href="mailto:qyongjian@gmail.com">Yong Jian</a>. Follow us on social media below.</p>
+                    </div>
+                </div>
+                <div class="row px-0 mx-0 mb-3 justify-content-center">
+                    <div class="col-sm-4" align="center">
+                        <a href="https://instagram.com/aidhubsg/" class="mr-2"><img height="32px" src="img/instagram.png" /></a>
+                        <a href="https://t.me/aidhubsg"><img height="32px" src="img/512px-Telegram_logo.png" /></a>
                     </div>
                 </div>
                 <form>
                     <div class="form-row">
-                        <div class="col-sm-5">
+                        <div class="col-md-5">
                             <select id="cats" class="form-control">
                                 <option value="all">All Categories</option>
                             </select>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-md-5">
                             <select id="micro-genres" class="form-control">
                                 <option value="all">All Types of Aid</option>
                             </select>
                         </div>
-                        <div class="col-sm-2" align="right">
+                        <div class="col-md-2" align="right">
                             <button id="search" type="button" class="btn btn-primary btn-block" data-toggle="collapse" data-target=".init">Get Resources</button>
                         </div>
                     </div>
                     <div class="form-row mt-3">
                         <div class="col"></div>
-                        <div class="col-4" align="center">
+                        <div class="col-md-4" align="center">
                             <a href="contribute.html" class="btn btn-block btn-primary">Submit an Initiative</a>
                         </div>
                         <div class="col"></div>
@@ -74,8 +84,8 @@
                 </form>
             </div>
         </div>
-        <div id="main" class="container-fluid px-0 collapse init" data-parent="#wrapper">
-            <div class="row w-100 mx-0">
+        <div id="main" class="container-fluid px-0 mt-3 collapse init" data-parent="#wrapper">
+            <div class="row mx-0 w-100">
                 <div id="filter-bar" class="col-3">
                     <form id="filter" class="filters p-4 w-100">
                         <div class="row">
@@ -99,8 +109,34 @@
                         </div>
                     </form>
                 </div>
-                <div id="testbed" class="col-9">
+                <div id="testbed" class="col filter-toggle show">
                     <!-- Canvas goes here -->
+                </div>
+                <div id="filter-bar-sm" class="collapse filter-toggle w-100 px-3 m-auto" class="col">
+                    <form id="filter-sm" class="filters p-4 w-100">
+                        <div class="row">
+                            <div class="col">
+                                <h3>Filter by</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col my-2">
+                                <label for="filter-cats-sm">Categories</label>
+                                <select id="filter-cats-sm" class="form-control mr-1 input-lg">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="filter-genres-sm">Type</label>
+                                <select id="filter-genres-sm" class="form-control input-lg">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <button class="init btn-block btn btn-primary collapse" type="button" data-toggle="collapse" data-target=".filter-toggle">
+                        Filter
+                    </button>
                 </div>
             </div>
         </div>

@@ -82,14 +82,26 @@ var tip = d3.tip()
 ////////////////////// Event Handlers /////////////////////////
 
 $('#filter-cats').change(function() {
-    genre = document.getElementById("filter-genres").value;
     cat = document.getElementById("filter-cats").value;
+    document.getElementById("filter-cats-sm").value = cat;
     filter();
 });
 
 $('#filter-genres').change(function() {
     genre = document.getElementById("filter-genres").value;
-    cat = document.getElementById("filter-cats").value;
+    document.getElementById("filter-genres-sm").value = genre;
+    filter();
+});
+
+$('#filter-cats-sm').change(function() {
+    cat = document.getElementById("filter-cats-sm").value;
+    document.getElementById("filter-cats").value = cat;
+    filter();
+});
+
+$('#filter-genres-sm').change(function() {
+    genre = document.getElementById("filter-genres-sm").value;
+    document.getElementById("filter-genres").value = genre;
     filter();
 });
 
@@ -140,8 +152,8 @@ function search() {
     d3.select("#wrapper")
         .style("overflow","visible");
 
-    d3.select("#contribute-nav-btn")
-        .style("display","inline");
+    //d3.select("#contribute-nav-btn")
+    //    .style("display","inline");
 
     cat = document.getElementById("cats").value;
     genre = document.getElementById("micro-genres").value;
@@ -150,6 +162,15 @@ function search() {
         listings = dump.listings;
         nav(listings);
         filter();
+    }).catch(err => {
+        console.log(err);
+        d3.select("#testbed")
+            .append("span")
+            .text("Help! I seem to be overwhelmed. Please email ");
+        d3.select("#testbed")
+            .append("a")
+            .attr("href","mailto:qyongjian@gmail.com")
+            .text("YJ");
     });
 };
 
@@ -189,6 +210,47 @@ function nav(listings) {
         });
     
     var default_cat = document.getElementById('filter-cats');
+
+    for(var i, j = 0; i = default_cat.options[j]; j++) {
+        if(i.value == cat) {
+            default_cat.selectedIndex = j;
+            break;
+        }
+    }
+
+    d3.select("#filter-genres-sm")
+        .selectAll("option")
+        .data(genres)
+        .enter()
+        .append("option")
+        .attr("value",function(d) {
+            return d[0]
+        })
+        .text(d => d[1]);
+
+    var default_genre = document.getElementById('filter-genres-sm');
+
+    for(var i, j = 0; i = default_genre.options[j]; j++) {
+        if(i.value == genre) {
+            default_genre.selectedIndex = j;
+            break;
+        }
+    }
+
+    var filter_cat = d3.select("#filter-cats-sm")
+        .selectAll("option")
+        .data(cats)
+
+    filter_cat.enter()
+        .append("option")
+        .attr("value",function(d) {
+            return d;
+        })
+        .text(function(d) {
+            return d;
+        });
+    
+    var default_cat = document.getElementById('filter-cats-sm');
 
     for(var i, j = 0; i = default_cat.options[j]; j++) {
         if(i.value == cat) {
