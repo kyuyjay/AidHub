@@ -521,7 +521,8 @@ var ContentMap = {
             var linkForce = d3.forceLink(this.links)
                 .id(function(d) {
                     return d.id
-                });
+                })
+                .distance(100);
 
             var sim = d3.forceSimulation(this.nodes)
                 .force("collide", collisionForce)
@@ -572,6 +573,14 @@ var ContentMap = {
                 .attr('cy', function(d) {
                     return d.y;
                 })
+                .on('mouseover', function(d) {
+                    d3.select(this)
+                        .attr('r', 20);
+                })
+                .on('mouseout', function(d) {
+                    d3.select(this)
+                        .attr('r', r);
+                })
                 .on('click', function(d) {
                     map.nodeId = d.id;
                 })
@@ -603,7 +612,8 @@ var ContentMap = {
                 .attr("class", "link")
                 .selectAll("line")
                 .data(sim.force('links').links())
-                .enter()
+
+            link.enter()
                 .append("line")
                     .attr("x1", function(d) { return d.source.x; })
                     .attr("y1", function(d) { return d.source.y; })
@@ -612,7 +622,7 @@ var ContentMap = {
                     .style("stroke", "black")
                     .style("stroke-wdith", "5px");
 
-
+            link.exit().remove()
         },
         ticked: function(svg) {
             svg.selectAll('circle')
