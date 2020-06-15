@@ -106,11 +106,14 @@ function start() {
 // Connect to routers
 function route(routes) {
     // Utility middleware
-    app.use(express.json());
+    app.use(express.json({limit: '15mb'}));
     app.use(express.urlencoded({extended: true}));
 
     // Static middleware
     app.use('/', express.static('static'));
+
+    // Library middleware
+    app.use('/lib', express.static('node_modules'));
 
     // Use data router for resource listing
     app.use('/data', routes.data);
@@ -120,8 +123,8 @@ function route(routes) {
     
     //// BETA FEATURES ////
 
-    // Use aidpool router for user based mutual aid pooling
-    app.use('/aidpool', routes.aidpool);
+    // Use nexus router for mapping
+    app.use('/beta/nexus', routes.nexus);
 }
 
 start()
