@@ -209,7 +209,7 @@ var ContentMapFormNode = {
                     if (!res.ok) {
                         alert("Error " + res.status + " " + res.statusText + " :(") 
                     }
-                    $('#form').modal('hide');
+                    $('#formNode').modal('hide');
                     this.$emit('refresh');
     
                 });
