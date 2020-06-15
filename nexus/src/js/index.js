@@ -435,7 +435,9 @@ var ContentMap = {
                     <ContentMapDetails :node-id="nodeId" v-on:edit="editNode" v-on:refresh="refresh" />
                 </div>
                 <div class="col">
-                    <svg id="canvas" class="vh-100 w-100"></svg>
+                    <svg id="canvas" class="vh-100 w-100">
+                        <g id="link-canvas"></g>
+                    </svg>
                 </div>
             </div>
             <ContentMapFormNode :node="node" v-on:refresh="refresh" />
@@ -608,8 +610,7 @@ var ContentMap = {
                     .style('fill-opacity', 0)
                     .remove();
 
-            var link = svg.append("g")
-                .attr("class", "link")
+            var link = svg.select("#link-canvas")
                 .selectAll("line")
                 .data(sim.force('links').links())
 
