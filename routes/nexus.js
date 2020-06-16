@@ -90,11 +90,13 @@ module.exports = function(db, errorHandler) {
 
     nexus.post('/content/links', function(req, res) {
         db.collection('links')
-            .insertOne({
-                "id": req.body.id,
-                "source": req.body.source,
-                "target": req.body.target
-            })
+            .updateOne({ "id": req.body.id }, {
+                $set: {
+                    "id": req.body.id,
+                    "source": req.body.source,
+                    "target": req.body.target
+                }
+            }, { "upsert": true })
             .then(data => {
                 res.sendStatus(200);
             })
@@ -114,6 +116,22 @@ module.exports = function(db, errorHandler) {
     nexus.delete('/content/links/:linkId', function(req, res) {
         db.collection('links')
             .deleteOne({ "id": req.params.linkId })
+            .then(result => {
+                if (result.result.n == 1) {
+                    res.sendStatus(200);
+                } else {
+                    res.sendStatus(500);
+                }
+            })
+            .catch(err => errorHandler(err, res));
+    });
+
+    nexus.delete('/content/links/multi/:nodeId', function(req, res) {
+        db.collection('links')
+            .deleteMany({ $or: [
+                { "source": req.params.nodeId },
+                { "target": req.params.nodeId }
+            ]})
             .then(result => {
                 if (result.result.n == 1) {
                     res.sendStatus(200);

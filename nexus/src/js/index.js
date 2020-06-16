@@ -21,14 +21,14 @@ var TheNavbar = {
 
 var ContentMapDelete = {
     props: [
-        'nodeId'
+        'type', 'eId'
     ],
     template: `
         <div class="modal" tabindex="-1" role="dialog" id="delete">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Are you sure you want to delete this entity?</h5>
+                        <h5 class="modal-title">Are you sure you want to delete {{ eId }} from {{ type }}</h5>
                         <button type="button" class="close" data-dismiss="modal">
                             <span>&times;</span>
                         </button>
@@ -43,16 +43,32 @@ var ContentMapDelete = {
     `,
     methods: {
         deleteContent: function() {
-            fetch('/beta/nexus/content/nodes/' + this.nodeId, {
-                    method: 'DELETE',
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        alert('Delete operation failed :( Error ' + response.status + " " + response.statusText);
+            if (this.type == 'nodes') {
+                var resNode = fetch('/beta/nexus/content/nodes/' + this.eId, {
+                        method: 'DELETE',
+                    })
+                var resLinks = fetch('/beta/nexus/content/links/multi/' + this.eId, {
+                        method: 'DELETE',
+                    })
+                Promise.all([resNode, resLinks]).then(res => {
+                    if (!res[0].ok || !res[1].ok) {
+                        alert('Delete operation failed :( Error for node' + res[0].status + ' ' + res[0].statusText + ' Error for links ' +res[1].status + ' ' + res[1].statusText);
                     }
-                    this.$emit('refresh');
                     $('#delete').modal('hide');
+                    this.$emit('refresh');
                 });
+            } else {
+                fetch('/beta/nexus/content/links/' + this.eId, {
+                        method: 'DELETE',
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            alert("Error " + res.status + " " + res.statusText + " :(") 
+                        }
+                        $('#delete').modal('hide');
+                        this.$emit('refresh');
+                    });
+            }
         }
     }
 };
@@ -307,9 +323,6 @@ var ContentMapFormLink = {
     } 
 }
 var ContentMapDetails = {
-    components: {
-        'ContentMapDelete': ContentMapDelete
-    },
     props: [
         'nodeId'
     ],
@@ -356,10 +369,9 @@ var ContentMapDetails = {
                         <button class="btn btn-block btn-primary" v-on:click="$emit('edit', node)">Edit</button>
                     </div>
                     <div class="col">
-                        <button class="btn btn-block btn-secondary" data-toggle="modal" data-target="#delete">Delete</button>
+                        <button class="btn btn-block btn-secondary" v-on:click="$emit('del', nodeId)">Delete</button>
                     </div>
                 </div>
-                <ContentMapDelete :node-id="nodeId" v-on:refresh="$emit('refresh')" />
             </div>
             <div v-if="nodeId === ''">
                 <span>Click on an entity!</span>
@@ -420,19 +432,21 @@ var ContentMap = {
     components: {
         'ContentMapFormNode': ContentMapFormNode,
         'ContentMapFormLink': ContentMapFormLink,
-        'ContentMapDetails': ContentMapDetails
+        'ContentMapDetails': ContentMapDetails,
+        'ContentMapDelete': ContentMapDelete
     },
     template: `
         <div id="map" class="container-fluid">
             <div class="row">
                 <div class="col-4">
+                    <p>Drag a line between nodes to add a link. Click on a link to delete.</p>
                     <button type="button" class="btn btn-primary btn-block mb-3" v-on:click="addNode">
                         Add Entity
                     </button>
                     <!-- <button type="button" class="btn btn-primary btn-block mb-3" v-on:click="addLink">
                         Add link
                     </button> -->
-                    <ContentMapDetails :node-id="nodeId" v-on:edit="editNode" v-on:refresh="refresh" />
+                    <ContentMapDetails :node-id="nodeId" v-on:edit="editNode" v-on:refresh="refresh" v-on:del="deleteNode" />
                 </div>
                 <div class="col">
                     <svg id="canvas" class="vh-100 w-100">
@@ -442,6 +456,7 @@ var ContentMap = {
             </div>
             <ContentMapFormNode :node="node" v-on:refresh="refresh" />
             <ContentMapFormLink :link="link" v-on:refresh="refresh" />
+            <ContentMapDelete :type="eType" :e-id="eId" v-on:refresh="refresh" />
         </div>
     `,
     data: function() {
@@ -450,7 +465,9 @@ var ContentMap = {
             link: {},
             nodes: [],
             links: [],
-            nodeId: ""
+            nodeId: "",
+            eId: "",
+            eType: ""
         }
     },
     mounted: function() {
@@ -478,6 +495,11 @@ var ContentMap = {
             this.node = obj;
             $('#formNode').modal('show');
         },
+        deleteNode: function(eId) {
+            this.eId = eId;
+            this.eType = 'nodes';
+            $('#delete').modal('show');
+        },
         addLink: function(s, t) {
             var payload = JSON.stringify({
                 id: (s.id + '-' + t.id).toLowerCase().replace(/\s+/g, "-"),
@@ -495,10 +517,13 @@ var ContentMap = {
                 if (!res.ok) {
                     alert("Error " + res.status + " " + res.statusText + " :(") 
                 }
-                $('#form').modal('hide');
                 this.refresh()
             });
 
+        },
+        deleteLink: function() {
+            this.eType = 'links';
+            $('#delete').modal('show');
         },
         render: function() {
             var map = this;
@@ -560,10 +585,9 @@ var ContentMap = {
                             if (d.id != o.id) {
                                 map.addLink(d, o)
                             }
-                        } else {
-                            line.remove();
                         }
                     })
+                    line.remove();
                 });
 
             circles.enter()
@@ -621,7 +645,18 @@ var ContentMap = {
                     .attr("x2", function(d) { return d.target.x; })
                     .attr("y2", function(d) { return d.target.y; })
                     .style("stroke", "black")
-                    .style("stroke-wdith", "5px");
+                    .style("stroke-width", "5px")
+                    .on("click", function(d) {
+                        map.eId = d.id;
+                        map.deleteLink();
+                    });
+
+            link.transition()
+                .duration(300)
+                .attr("x1", function(d) { return d.source.x; })
+                .attr("y1", function(d) { return d.source.y; })
+                .attr("x2", function(d) { return d.target.x; })
+                .attr("y2", function(d) { return d.target.y; })
 
             link.exit().remove()
         },
