@@ -133,11 +133,7 @@ module.exports = function(db, errorHandler) {
                 { "target": req.params.nodeId }
             ]})
             .then(result => {
-                if (result.result.n >= 1) {
-                    res.sendStatus(200);
-                } else {
-                    res.sendStatus(500);
-                }
+                res.sendStatus(200);
             })
             .catch(err => errorHandler(err, res));
     });
