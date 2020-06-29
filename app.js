@@ -46,7 +46,7 @@ if (argv.env == 'prod') {
     // HTTPS credentials
     var privateKey  = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/privkey.pem', 'utf8');
     var certificate = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/cert.pem', 'utf8');
-    var ca = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/chain.pem', 'utf8');
+    var ca = fs.readFileSync('/etc/letsencrypt/live/aidhubsg.com/fullchain.pem', 'utf8');
     var credentials = {key: privateKey, cert: certificate};
 }
 
