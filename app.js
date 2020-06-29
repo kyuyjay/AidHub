@@ -122,9 +122,6 @@ function route(routes) {
     app.use('/count', routes.count);
     
     //// BETA FEATURES ////
-
-    // Use nexus router for mapping
-    app.use('/beta/nexus', routes.nexus);
 }
 
 start()
