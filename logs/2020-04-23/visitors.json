@@ -1,0 +1,9 @@
+{"_id":{"$oid":"5e8f40651bddd11276883a48"},"ip":"::ffff:127.0.0.1","date":{"$date":"2020-04-09T15:33:57.255Z"},"unique":true}
+{"_id":{"$oid":"5e8f4083c26a711284137272"},"ip":"::1","date":{"$date":"2020-04-09T15:34:27.696Z"},"unique":true}
+{"_id":{"$oid":"5e8f421ffc4e1f12cd96a578"},"ip":"::1","date":{"$date":"2020-04-09T15:41:19.515Z"},"unique":true}
+{"_id":{"$oid":"5e901b802c18fd15163a368e"},"ip":"::1","date":{"$date":"2020-04-10T07:08:48.350Z"},"unique":true}
+{"_id":{"$oid":"5e933a35b8aca019742a8b4f"},"ip":"::1","date":{"$date":"2020-04-12T15:56:37.709Z"},"unique":null}
+{"_id":{"$oid":"5e933a58b8aca019742a8b50"},"ip":"::1","date":{"$date":"2020-04-12T15:57:12.691Z"},"unique":null}
+{"_id":{"$oid":"5e933a76a91c301982ad226b"},"ip":"::1","date":{"$date":"2020-04-12T15:57:42.102Z"},"unique":"true"}
+{"_id":{"$oid":"5e933a8fa91c301982ad226c"},"ip":"::1","date":{"$date":"2020-04-12T15:58:07.203Z"},"unique":"true"}
+{"_id":{"$oid":"5e9340ddbb3eab1a91f8de60"},"ip":"::1","date":{"$date":"2020-04-12T16:25:01.647Z"},"unique":"false"}
